@@ -57,18 +57,7 @@ class ProductsAdapter(
 
     // ── refreshData ──────────────────────────────────────────
     fun refreshData(newList: List<Product>) {
-        val oldSize = productList.size
         productList = newList
-        val newSize = productList.size
-        if (oldSize == newSize) {
-            notifyItemRangeChanged(0, newSize)
-        } else if (newSize > oldSize) {
-            notifyItemRangeChanged(0, oldSize)
-            notifyItemRangeInserted(oldSize, newSize - oldSize)
-        } else {
-            notifyItemRangeChanged(0, newSize)
-            notifyItemRangeRemoved(newSize, oldSize - newSize)
-        }
+        notifyDataSetChanged()
     }
-
 } // ← end of class

@@ -13,7 +13,7 @@
         layout="@layout/toolbar_main" />
 
     <!-- ✅ SCROLLABLE CONTENT -->
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
@@ -119,14 +119,6 @@
                     android:textSize="16sp"
                     android:fontFamily="@font/poppins_semibold" />
 
-                <TextView
-                    android:id="@+id/seeAllFeatured"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="See all"
-                    android:textColor="@color/sky"
-                    android:textSize="13sp"
-                    android:fontFamily="@font/poppins" />
 
             </LinearLayout>
 
@@ -175,8 +167,41 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="8dp"
                 android:nestedScrollingEnabled="false" />
+            <LinearLayout
+                android:id="@+id/emptyState"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:paddingVertical="48dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🍽️"
+                    android:textSize="48sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="No food found!"
+                    android:textColor="@color/navy"
+                    android:textSize="18sp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:paddingTop="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Try a different search or category"
+                    android:textColor="@color/ocean"
+                    android:textSize="13sp"
+                    android:fontFamily="@font/poppins" />
+
+            </LinearLayout>
 
         </LinearLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

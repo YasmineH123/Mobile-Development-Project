@@ -1,6 +1,5 @@
 package com.example.project
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,11 +12,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.project.databinding.ActivityMainBinding
-import android.widget.ImageView
 
 class MainActivity : AppCompatActivity() {
 
-    // ── ViewBinding + DB + Adapter ───────────────────────────
     private lateinit var binding: ActivityMainBinding
     private lateinit var dbHelper: FlyDatabaseHelper
     private lateinit var productsAdapter: ProductsAdapter
@@ -25,37 +22,27 @@ class MainActivity : AppCompatActivity() {
     private var allProducts: List<Product> = emptyList()
     private var selectedCategory: String = "All"
 
-    // ── onCreate ─────────────────────────────────────────────
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // 1. Bind the layout
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.searchBar.setHintTextColor(getColor(R.color.light_blue))
 
-        // 2. Set up toolbar
         val toolbar = binding.toolbar.root as androidx.appcompat.widget.Toolbar
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
-        // 3. Create DB helper instance
         dbHelper = FlyDatabaseHelper(this)
-
-        // 4. Load all products from DB
         allProducts = dbHelper.getAllProducts()
 
-        // 5. Set up RecyclerView with 2-column grid
+        android.util.Log.d("FLY_DEBUG", "Total products: ${allProducts.size}")
+
         productsAdapter = ProductsAdapter(
             productList = allProducts,
             context = this,
-            onProductClick = { product ->
-                // TODO: teammate will create SingleProductActivity
-                // val intent = Intent(this, SingleProductActivity::class.java)
-                // intent.putExtra("PRODUCT_ID", product.id)
-                // startActivity(intent)
-            },
+            onProductClick = { _ -> },
             onAddToCartClick = { product ->
-                // cart logic — teammate handles this
                 Toast.makeText(
                     this,
                     getString(R.string.added_to_cart, product.name),
@@ -66,14 +53,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.productsRecyclerView.layoutManager = GridLayoutManager(this, 2)
         binding.productsRecyclerView.adapter = productsAdapter
+        binding.productsRecyclerView.isNestedScrollingEnabled = false
 
-        // 6. Build category chips
         buildCategoryChips()
-
-        // 7. Build featured horizontal row
         buildFeaturedRow()
 
-        // 8. Search bar listener
         binding.searchBar.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
@@ -81,20 +65,13 @@ class MainActivity : AppCompatActivity() {
             }
             override fun afterTextChanged(s: Editable?) {}
         })
+
+        // show all 12 on launch
+        productsAdapter.refreshData(allProducts)
     }
 
-    // ── onResume: refresh like the Dr. did ───────────────────
-    override fun onResume() {
-        super.onResume()
-        allProducts = dbHelper.getAllProducts()
-        filterProducts(binding.searchBar.text.toString())
-    }
-
-    // ── Build Category Chips ─────────────────────────────────
     private fun buildCategoryChips() {
-        val categories = dbHelper.getCategories()
         val poppins = ResourcesCompat.getFont(this, R.font.poppins)
-
         binding.categoryChipsContainer.removeAllViews()
 
         for (category in dbHelper.getCategories()) {
@@ -112,7 +89,6 @@ class MainActivity : AppCompatActivity() {
             params.setMargins(8, 0, 8, 0)
             chip.layoutParams = params
 
-            // style: selected = navy filled, unselected = outlined
             updateChipStyle(chip, category == selectedCategory)
 
             chip.setOnClickListener {
@@ -125,7 +101,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // ── Update single chip style ─────────────────────────────
     private fun updateChipStyle(chip: TextView, isSelected: Boolean) {
         if (isSelected) {
             chip.setBackgroundResource(R.drawable.chip_selected_bg)
@@ -136,60 +111,52 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // ── Update all chips after selection changes ─────────────
     private fun updateAllChipStyles() {
-        val categories = dbHelper.getCategories()
         for (i in 0 until binding.categoryChipsContainer.childCount) {
             val chip = binding.categoryChipsContainer.getChildAt(i) as TextView
             updateChipStyle(chip, chip.text.toString() == selectedCategory)
         }
     }
 
-    // ── Build Featured Horizontal Row ────────────────────────
     private fun buildFeaturedRow() {
-        val featured = dbHelper.getPopularProducts()
         binding.featuredContainer.removeAllViews()
-
-        for (product in featured) {
+        for (product in dbHelper.getPopularProducts()) {
             val itemView = LayoutInflater.from(this)
                 .inflate(R.layout.featured_item, binding.featuredContainer, false)
 
             itemView.findViewById<TextView>(R.id.featuredName).text = product.name
-            if (product.imageRes != 0) {
-                val featuredImage = itemView.findViewById<android.widget.ImageView>(R.id.featuredImage)
-                featuredImage.setImageResource(product.imageRes)
-            }
             itemView.findViewById<TextView>(R.id.featuredPrice).text =
                 getString(R.string.product_price, product.price)
             itemView.findViewById<TextView>(R.id.featuredRating).text =
                 getString(R.string.product_rating, product.rating)
 
-            itemView.setOnClickListener {
-                // TODO: teammate will create SingleProductActivity
-                // val intent = Intent(this, SingleProductActivity::class.java)
-                // intent.putExtra("PRODUCT_ID", product.id)
-                // startActivity(intent)
+            if (product.imageRes != 0) {
+                val featuredImage = itemView.findViewById<android.widget.ImageView>(R.id.featuredImage)
+                featuredImage.setImageResource(product.imageRes)
             }
+
+            itemView.setOnClickListener { }
             binding.featuredContainer.addView(itemView)
         }
     }
 
-    private fun setImageResource(imageRes: Int) {}
-
-    // ── Filter products by search + category ─────────────────
     private fun filterProducts(query: String) {
-        val filtered = if (query.isEmpty() && selectedCategory == "All") {
-            allProducts
-        } else {
-            allProducts.filter { product ->
-                val matchesCategory = selectedCategory == "All" ||
-                        product.category == selectedCategory
-                val matchesSearch = query.isEmpty() ||
-                        product.name.contains(query, ignoreCase = true) ||
-                        product.description.contains(query, ignoreCase = true)
-                matchesCategory && matchesSearch
-            }
+        val filtered = allProducts.filter { product ->
+            val matchesCategory = selectedCategory == "All" ||
+                    product.category == selectedCategory
+            val matchesSearch = query.isEmpty() ||
+                    product.name.contains(query, ignoreCase = true) ||
+                    product.description.contains(query, ignoreCase = true)
+            matchesCategory && matchesSearch
         }
+
+        if (filtered.isEmpty()) {
+            binding.productsRecyclerView.visibility = android.view.View.GONE
+            binding.emptyState.visibility = android.view.View.VISIBLE
+        } else {
+            binding.productsRecyclerView.visibility = android.view.View.VISIBLE
+            binding.emptyState.visibility = android.view.View.GONE
+        }
+
         productsAdapter.refreshData(filtered)
-    }
-}
+    }}
