@@ -57,66 +57,78 @@ class FlyDatabaseHelper(private val context: Context) :
             mapOf(COLUMN_NAME to "Classic Smash Burger",
                 COLUMN_DESCRIPTION to "Double smashed beef patty, cheddar, pickles, special sauce",
                 COLUMN_PRICE to 8.99, COLUMN_CATEGORY to "Burgers",
-                COLUMN_IMAGE_RES to 0, COLUMN_RATING to 4.8, COLUMN_IS_POPULAR to 1),
+                COLUMN_IMAGE_RES to R.drawable.img_smash_burger,
+                COLUMN_RATING to 4.8, COLUMN_IS_POPULAR to 1),
 
             mapOf(COLUMN_NAME to "BBQ Bacon Burger",
                 COLUMN_DESCRIPTION to "Crispy bacon, smoky BBQ sauce, onion rings, lettuce",
                 COLUMN_PRICE to 10.49, COLUMN_CATEGORY to "Burgers",
-                COLUMN_IMAGE_RES to 0, COLUMN_RATING to 4.6, COLUMN_IS_POPULAR to 0),
+                COLUMN_IMAGE_RES to R.drawable.img_bbq_bacon_burger,
+                COLUMN_RATING to 4.6, COLUMN_IS_POPULAR to 0),
 
             mapOf(COLUMN_NAME to "Mushroom Swiss Burger",
                 COLUMN_DESCRIPTION to "Sautéed mushrooms, Swiss cheese, garlic aioli",
                 COLUMN_PRICE to 9.99, COLUMN_CATEGORY to "Burgers",
-                COLUMN_IMAGE_RES to 0, COLUMN_RATING to 4.5, COLUMN_IS_POPULAR to 0),
+                COLUMN_IMAGE_RES to R.drawable.img_mushroom_swiss_burger,
+                COLUMN_RATING to 4.5, COLUMN_IS_POPULAR to 0),
 
             // 🍕 Pizza
             mapOf(COLUMN_NAME to "Margherita Pizza",
                 COLUMN_DESCRIPTION to "San Marzano tomato, fresh mozzarella, basil, olive oil",
                 COLUMN_PRICE to 11.99, COLUMN_CATEGORY to "Pizza",
-                COLUMN_IMAGE_RES to 0, COLUMN_RATING to 4.9, COLUMN_IS_POPULAR to 1),
+                COLUMN_IMAGE_RES to R.drawable.img_margherita_pizza,
+                COLUMN_RATING to 4.9, COLUMN_IS_POPULAR to 1),
 
             mapOf(COLUMN_NAME to "Pepperoni Feast",
                 COLUMN_DESCRIPTION to "Double pepperoni, mozzarella, tomato sauce, oregano",
                 COLUMN_PRICE to 13.49, COLUMN_CATEGORY to "Pizza",
-                COLUMN_IMAGE_RES to 0, COLUMN_RATING to 4.7, COLUMN_IS_POPULAR to 1),
+                COLUMN_IMAGE_RES to R.drawable.img_pepperoni_pizza,
+                COLUMN_RATING to 4.7, COLUMN_IS_POPULAR to 1),
 
             mapOf(COLUMN_NAME to "BBQ Chicken Pizza",
                 COLUMN_DESCRIPTION to "Grilled chicken, BBQ sauce, red onions, cilantro",
                 COLUMN_PRICE to 13.99, COLUMN_CATEGORY to "Pizza",
-                COLUMN_IMAGE_RES to 0, COLUMN_RATING to 4.5, COLUMN_IS_POPULAR to 0),
+                COLUMN_IMAGE_RES to R.drawable.img_bbq_chicken_pizza,
+                COLUMN_RATING to 4.5, COLUMN_IS_POPULAR to 0),
 
             // 🌮 Wraps
             mapOf(COLUMN_NAME to "Grilled Chicken Wrap",
                 COLUMN_DESCRIPTION to "Grilled chicken strips, lettuce, tomato, garlic sauce, tortilla",
                 COLUMN_PRICE to 7.49, COLUMN_CATEGORY to "Wraps",
-                COLUMN_IMAGE_RES to 0, COLUMN_RATING to 4.6, COLUMN_IS_POPULAR to 1),
+                COLUMN_IMAGE_RES to R.drawable.img_chicken_wrap,
+                COLUMN_RATING to 4.6, COLUMN_IS_POPULAR to 1),
 
             mapOf(COLUMN_NAME to "Falafel Wrap",
                 COLUMN_DESCRIPTION to "Crispy falafel, hummus, pickled vegetables, tahini",
                 COLUMN_PRICE to 6.99, COLUMN_CATEGORY to "Wraps",
-                COLUMN_IMAGE_RES to 0, COLUMN_RATING to 4.4, COLUMN_IS_POPULAR to 0),
+                COLUMN_IMAGE_RES to R.drawable.img_falafel_wrap,
+                COLUMN_RATING to 4.4, COLUMN_IS_POPULAR to 0),
 
             // 🍣 Sushi
             mapOf(COLUMN_NAME to "Salmon Avocado Roll",
                 COLUMN_DESCRIPTION to "Fresh salmon, creamy avocado, cucumber, sesame seeds",
                 COLUMN_PRICE to 14.99, COLUMN_CATEGORY to "Sushi",
-                COLUMN_IMAGE_RES to 0, COLUMN_RATING to 4.9, COLUMN_IS_POPULAR to 1),
+                COLUMN_IMAGE_RES to R.drawable.img_salmon_roll,
+                COLUMN_RATING to 4.9, COLUMN_IS_POPULAR to 1),
 
             mapOf(COLUMN_NAME to "Spicy Tuna Roll",
                 COLUMN_DESCRIPTION to "Tuna, spicy mayo, cucumber, tobiko",
                 COLUMN_PRICE to 13.99, COLUMN_CATEGORY to "Sushi",
-                COLUMN_IMAGE_RES to 0, COLUMN_RATING to 4.7, COLUMN_IS_POPULAR to 0),
+                COLUMN_IMAGE_RES to R.drawable.img_tuna_roll,
+                COLUMN_RATING to 4.7, COLUMN_IS_POPULAR to 0),
 
             // 🥤 Drinks
             mapOf(COLUMN_NAME to "Mango Lemonade",
                 COLUMN_DESCRIPTION to "Fresh mango, lemon juice, mint, sparkling water",
                 COLUMN_PRICE to 3.99, COLUMN_CATEGORY to "Drinks",
-                COLUMN_IMAGE_RES to 0, COLUMN_RATING to 4.8, COLUMN_IS_POPULAR to 1),
+                COLUMN_IMAGE_RES to R.drawable.img_mango_lemonade,
+                COLUMN_RATING to 4.8, COLUMN_IS_POPULAR to 1),
 
             mapOf(COLUMN_NAME to "Classic Milkshake",
                 COLUMN_DESCRIPTION to "Vanilla ice cream, whole milk, your choice of flavor",
                 COLUMN_PRICE to 4.99, COLUMN_CATEGORY to "Drinks",
-                COLUMN_IMAGE_RES to 0, COLUMN_RATING to 4.6, COLUMN_IS_POPULAR to 0)
+                COLUMN_IMAGE_RES to R.drawable.img_milkshake,
+                COLUMN_RATING to 4.6, COLUMN_IS_POPULAR to 0)
         )
 
         for (product in products) {

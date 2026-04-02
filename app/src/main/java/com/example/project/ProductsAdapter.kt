@@ -41,8 +41,11 @@ class ProductsAdapter(
         holder.productName.text = product.name
         holder.productRating.text = context.getString(R.string.product_rating, product.rating)
         holder.productPrice.text  = context.getString(R.string.product_price, product.price)
-        holder.productImage.setImageResource(R.drawable.ic_home)
-
+        if (product.imageRes != 0) {
+            holder.productImage.setImageResource(product.imageRes)
+        } else {
+            holder.productImage.setImageResource(R.drawable.ic_home)
+        }
         holder.itemView.setOnClickListener {
             onProductClick(product)
         }

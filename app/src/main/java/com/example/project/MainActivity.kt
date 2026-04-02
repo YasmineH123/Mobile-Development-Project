@@ -31,9 +31,11 @@ class MainActivity : AppCompatActivity() {
         // 1. Bind the layout
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.searchBar.setHintTextColor(getColor(R.color.light_blue))
 
         // 2. Set up toolbar
-        setSupportActionBar(binding.toolbar)
+        val toolbar = binding.toolbar as androidx.appcompat.widget.Toolbar
+        setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         // 3. Create DB helper instance
@@ -95,7 +97,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.categoryChipsContainer.removeAllViews()
 
-        for (category in categories) {
+        for (category in dbHelper.getCategories()) {
             val chip = TextView(this)
             chip.text = category
             chip.textSize = 13f
@@ -153,17 +155,21 @@ class MainActivity : AppCompatActivity() {
                 .inflate(R.layout.featured_item, binding.featuredContainer, false)
 
             itemView.findViewById<TextView>(R.id.featuredName).text = product.name
+            if (product.imageRes != 0) {
+                itemView.findViewById<ImageView>(R.id.featuredImage)
+                    .setImageResource(product.imageRes)
+            }
             itemView.findViewById<TextView>(R.id.featuredPrice).text =
                 getString(R.string.product_price, product.price)
             itemView.findViewById<TextView>(R.id.featuredRating).text =
                 getString(R.string.product_rating, product.rating)
 
             itemView.setOnClickListener {
-                val intent = Intent(this, SingleProductActivity::class.java)
-                intent.putExtra("PRODUCT_ID", product.id)
-                startActivity(intent)
+                // TODO: teammate will create SingleProductActivity
+                // val intent = Intent(this, SingleProductActivity::class.java)
+                // intent.putExtra("PRODUCT_ID", product.id)
+                // startActivity(intent)
             }
-
             binding.featuredContainer.addView(itemView)
         }
     }
