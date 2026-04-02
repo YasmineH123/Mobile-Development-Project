@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.project.databinding.ActivityMainBinding
+import android.widget.ImageView
 
 class MainActivity : AppCompatActivity() {
 
@@ -34,9 +35,8 @@ class MainActivity : AppCompatActivity() {
         binding.searchBar.setHintTextColor(getColor(R.color.light_blue))
 
         // 2. Set up toolbar
-        val toolbar = binding.toolbar as androidx.appcompat.widget.Toolbar
+        val toolbar = binding.toolbar.root as androidx.appcompat.widget.Toolbar
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         // 3. Create DB helper instance
         dbHelper = FlyDatabaseHelper(this)
@@ -156,8 +156,8 @@ class MainActivity : AppCompatActivity() {
 
             itemView.findViewById<TextView>(R.id.featuredName).text = product.name
             if (product.imageRes != 0) {
-                itemView.findViewById<ImageView>(R.id.featuredImage)
-                    .setImageResource(product.imageRes)
+                val featuredImage = itemView.findViewById<android.widget.ImageView>(R.id.featuredImage)
+                featuredImage.setImageResource(product.imageRes)
             }
             itemView.findViewById<TextView>(R.id.featuredPrice).text =
                 getString(R.string.product_price, product.price)
@@ -174,14 +174,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setImageResource(imageRes: Int) {}
+
     // ── Filter products by search + category ─────────────────
     private fun filterProducts(query: String) {
-        val filtered = allProducts.filter { product ->
-            val matchesCategory = selectedCategory == "All" ||
-                    product.category == selectedCategory
-            val matchesSearch = product.name.contains(query, ignoreCase = true) ||
-                    product.description.contains(query, ignoreCase = true)
-            matchesCategory && matchesSearch
+        val filtered = if (query.isEmpty() && selectedCategory == "All") {
+            allProducts
+        } else {
+            allProducts.filter { product ->
+                val matchesCategory = selectedCategory == "All" ||
+                        product.category == selectedCategory
+                val matchesSearch = query.isEmpty() ||
+                        product.name.contains(query, ignoreCase = true) ||
+                        product.description.contains(query, ignoreCase = true)
+                matchesCategory && matchesSearch
+            }
         }
         productsAdapter.refreshData(filtered)
     }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Project</string>
+    <string name="app_name">FLY</string>
     <string name="product_rating">⭐ %1$.1f</string>
     <string name="product_price">$%1$.2f</string>
     <string name="added_to_cart">%1$s added to cart!</string>
