@@ -27,7 +27,9 @@
             android:exported="false"/>
 
         <activity android:name=".SignUpActivity"/>
-
+        <activity
+            android:name=".FoodItemDetailActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

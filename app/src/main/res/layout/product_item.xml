@@ -5,76 +5,84 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
-    app:cardCornerRadius="16dp"
-    app:cardElevation="4dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="5dp"
     app:cardBackgroundColor="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="10dp">
+        android:orientation="vertical">
 
-        <!-- Product Image -->
+        <!-- Image -->
         <ImageView
             android:id="@+id/productImage"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="130dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_home"
             android:background="@color/pale_blue" />
 
-        <!-- Product Name -->
-        <TextView
-            android:id="@+id/productName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Product Name"
-            android:textColor="@color/navy"
-            android:textSize="13sp"
-            android:fontFamily="@font/poppins_semibold"
-            android:paddingTop="8dp"
-            android:maxLines="1"
-            android:ellipsize="end" />
-
-        <!-- Rating -->
-        <TextView
-            android:id="@+id/productRating"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="⭐ 4.9"
-            android:textColor="@color/ocean"
-            android:textSize="11sp"
-            android:fontFamily="@font/poppins" />
-
-        <!-- Price + Add Button row -->
+        <!-- Content -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:paddingTop="4dp">
+            android:orientation="vertical"
+            android:paddingHorizontal="12dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="12dp">
 
             <TextView
-                android:id="@+id/productPrice"
-                android:layout_width="0dp"
+                android:id="@+id/productName"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="$8.99"
-                android:textColor="@color/sky"
-                android:textSize="14sp"
-                android:fontFamily="@font/poppins_bold" />
+                android:text="Product Name"
+                android:textColor="@color/navy"
+                android:textSize="13sp"
+                android:fontFamily="@font/poppins_semibold"
+                android:maxLines="1"
+                android:ellipsize="end" />
 
-            <ImageView
-                android:id="@+id/addToCartBtn"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
-                android:src="@drawable/ic_cart"
-                android:background="@drawable/btn_add_bg"
-                android:padding="5dp" />
+            <TextView
+                android:id="@+id/productRating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:text="⭐ 4.9"
+                android:textColor="@color/ocean"
+                android:textSize="11sp"
+                android:fontFamily="@font/poppins" />
 
+            <!-- Price + Add row -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="8dp">
+
+                <TextView
+                    android:id="@+id/productPrice"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="$8.99"
+                    android:textColor="@color/sky"
+                    android:textSize="15sp"
+                    android:fontFamily="@font/poppins_bold" />
+
+                <ImageView
+                    android:id="@+id/addToCartBtn"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:src="@drawable/ic_cart"
+                    android:background="@drawable/btn_add_bg"
+                    android:padding="7dp"
+                    android:clickable="true"
+                    android:focusable="true" />
+
+            </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

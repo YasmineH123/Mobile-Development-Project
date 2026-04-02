@@ -41,7 +41,11 @@ class MainActivity : AppCompatActivity() {
         productsAdapter = ProductsAdapter(
             productList = allProducts,
             context = this,
-            onProductClick = { _ -> },
+            onProductClick = { product ->
+                val intent = android.content.Intent(this, FoodItemDetailActivity::class.java)
+                intent.putExtra("PRODUCT_ID", product.id)
+                startActivity(intent)
+            },
             onAddToCartClick = { product ->
                 Toast.makeText(
                     this,
@@ -135,7 +139,11 @@ class MainActivity : AppCompatActivity() {
                 featuredImage.setImageResource(product.imageRes)
             }
 
-            itemView.setOnClickListener { }
+            itemView.setOnClickListener {
+                val intent = android.content.Intent(this, FoodItemDetailActivity::class.java)
+                intent.putExtra("PRODUCT_ID", product.id)
+                startActivity(intent)
+            }
             binding.featuredContainer.addView(itemView)
         }
     }

@@ -7,12 +7,10 @@
     android:orientation="vertical"
     android:background="@color/white">
 
-    <!-- ✅ SHARED TOOLBAR (same line all teammates use) -->
     <include
         android:id="@+id/toolbar"
         layout="@layout/toolbar_main" />
 
-    <!-- ✅ SCROLLABLE CONTENT -->
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -22,75 +20,77 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingBottom="24dp">
+            android:paddingBottom="32dp">
 
-            <!-- ✅ HEADER: greeting + subtitle -->
+            <!-- HEADER -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingHorizontal="16dp"
+                android:paddingHorizontal="20dp"
                 android:paddingTop="20dp"
-                android:paddingBottom="12dp"
+                android:paddingBottom="20dp"
                 android:background="@color/navy">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="What would you like?"
-                    android:textColor="@color/pale_blue"
+                    android:textColor="@color/light_blue"
                     android:textSize="13sp"
                     android:fontFamily="@font/poppins" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
                     android:text="Order Your Food 🍔"
                     android:textColor="@color/white"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:fontFamily="@font/poppins_bold" />
 
             </LinearLayout>
 
-            <!-- ✅ SEARCH BAR -->
+            <!-- SEARCH BAR -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
+                android:paddingHorizontal="20dp"
                 android:paddingTop="16dp"
-                android:paddingBottom="8dp"
+                android:paddingBottom="20dp"
                 android:background="@color/navy">
 
                 <EditText
                     android:id="@+id/searchBar"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="50dp"
                     android:hint="Search for food..."
                     android:textColor="@color/white"
                     android:textSize="14sp"
                     android:fontFamily="@font/poppins"
-                    android:paddingHorizontal="16dp"
+                    android:paddingHorizontal="18dp"
                     android:background="@drawable/search_bar_bg"
                     android:drawableStart="@drawable/ic_search"
-                    android:drawablePadding="8dp"
+                    android:drawablePadding="10dp"
                     android:inputType="text"
                     android:imeOptions="actionSearch" />
 
             </LinearLayout>
 
-            <!-- ✅ WAVE DIVIDER: navy to white transition -->
+            <!-- WAVE SPACER -->
             <View
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:background="@color/navy" />
 
-            <!-- ✅ CATEGORY CHIP TABS -->
+            <!-- CATEGORY CHIPS -->
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="12dp">
+                android:paddingHorizontal="16dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="8dp">
 
                 <LinearLayout
                     android:id="@+id/categoryChipsContainer"
@@ -101,13 +101,14 @@
 
             </HorizontalScrollView>
 
-            <!-- ✅ FEATURED / POPULAR SECTION HEADER -->
+            <!-- FEATURED HEADER -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
-                android:paddingBottom="8dp"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="10dp"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -116,36 +117,37 @@
                     android:layout_weight="1"
                     android:text="🔥 Featured"
                     android:textColor="@color/navy"
-                    android:textSize="16sp"
+                    android:textSize="17sp"
                     android:fontFamily="@font/poppins_semibold" />
-
 
             </LinearLayout>
 
-            <!-- ✅ FEATURED: HORIZONTAL SCROLL ROW -->
+            <!-- FEATURED ROW -->
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scrollbars="none"
-                android:paddingHorizontal="12dp"
-                android:paddingBottom="8dp">
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="8dp"
+                android:clipToPadding="false">
 
                 <LinearLayout
                     android:id="@+id/featuredContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" />
+                    android:orientation="horizontal"
+                    android:paddingVertical="6dp" />
 
             </HorizontalScrollView>
 
-            <!-- ✅ ALL PRODUCTS SECTION HEADER -->
+            <!-- ALL PRODUCTS HEADER -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="8dp"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="16dp"
+                android:paddingBottom="10dp"
                 android:gravity="center_vertical">
 
                 <TextView
@@ -155,18 +157,21 @@
                     android:layout_weight="1"
                     android:text="All Products"
                     android:textColor="@color/navy"
-                    android:textSize="16sp"
+                    android:textSize="17sp"
                     android:fontFamily="@font/poppins_semibold" />
 
             </LinearLayout>
 
-            <!-- ✅ PRODUCTS 2-COLUMN GRID -->
+            <!-- PRODUCTS GRID -->
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/productsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="8dp"
-                android:nestedScrollingEnabled="false" />
+                android:paddingHorizontal="12dp"
+                android:nestedScrollingEnabled="false"
+                android:clipToPadding="false" />
+
+            <!-- EMPTY STATE -->
             <LinearLayout
                 android:id="@+id/emptyState"
                 android:layout_width="match_parent"
@@ -180,20 +185,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="🍽️"
-                    android:textSize="48sp" />
+                    android:textSize="52sp" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:text="No food found!"
                     android:textColor="@color/navy"
                     android:textSize="18sp"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:paddingTop="8dp" />
+                    android:fontFamily="@font/poppins_semibold" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
                     android:text="Try a different search or category"
                     android:textColor="@color/ocean"
                     android:textSize="13sp"
