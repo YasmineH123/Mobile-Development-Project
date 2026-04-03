@@ -10,12 +10,9 @@ class FlyDatabaseHelper(private val context: Context) :
 
     companion object {
         private const val DATABASE_NAME = "fly.db"
-        private const val DATABASE_VERSION = 1
+        private const val DATABASE_VERSION = 2  // bumped from 1 → 2 to fix image mismatch
 
-        // Table
         const val TABLE_PRODUCTS = "products"
-
-        // Columns
         const val COLUMN_ID = "id"
         const val COLUMN_NAME = "name"
         const val COLUMN_DESCRIPTION = "description"
@@ -40,8 +37,6 @@ class FlyDatabaseHelper(private val context: Context) :
             )
         """.trimIndent()
         db.execSQL(createTable)
-
-        // Insert dummy data right after table creation
         insertDummyData(db)
     }
 
@@ -145,89 +140,63 @@ class FlyDatabaseHelper(private val context: Context) :
         }
     }
 
-    // Get all products
     fun getAllProducts(): List<Product> {
         val list = mutableListOf<Product>()
         val db = readableDatabase
         val cursor = db.query(TABLE_PRODUCTS, null, null, null, null, null, null)
-        while (cursor.moveToNext()) {
-            list.add(cursorToProduct(cursor))
-        }
+        while (cursor.moveToNext()) { list.add(cursorToProduct(cursor)) }
         cursor.close()
         return list
     }
 
-    // Get products by category
     fun getProductsByCategory(category: String): List<Product> {
         val list = mutableListOf<Product>()
         val db = readableDatabase
-        val cursor = db.query(
-            TABLE_PRODUCTS, null,
-            "$COLUMN_CATEGORY = ?", arrayOf(category),
-            null, null, null
-        )
-        while (cursor.moveToNext()) {
-            list.add(cursorToProduct(cursor))
-        }
+        val cursor = db.query(TABLE_PRODUCTS, null,
+            "$COLUMN_CATEGORY = ?", arrayOf(category), null, null, null)
+        while (cursor.moveToNext()) { list.add(cursorToProduct(cursor)) }
         cursor.close()
         return list
     }
 
-    // Get popular products (for the banner/featured section)
     fun getPopularProducts(): List<Product> {
         val list = mutableListOf<Product>()
         val db = readableDatabase
-        val cursor = db.query(
-            TABLE_PRODUCTS, null,
-            "$COLUMN_IS_POPULAR = ?", arrayOf("1"),
-            null, null, null
-        )
-        while (cursor.moveToNext()) {
-            list.add(cursorToProduct(cursor))
-        }
+        val cursor = db.query(TABLE_PRODUCTS, null,
+            "$COLUMN_IS_POPULAR = ?", arrayOf("1"), null, null, null)
+        while (cursor.moveToNext()) { list.add(cursorToProduct(cursor)) }
         cursor.close()
         return list
     }
 
-    // Get single product by ID (for Single Product page)
     fun getProductById(id: Int): Product? {
         val db = readableDatabase
-        val cursor = db.query(
-            TABLE_PRODUCTS, null,
-            "$COLUMN_ID = ?", arrayOf(id.toString()),
-            null, null, null
-        )
+        val cursor = db.query(TABLE_PRODUCTS, null,
+            "$COLUMN_ID = ?", arrayOf(id.toString()), null, null, null)
         val product = if (cursor.moveToFirst()) cursorToProduct(cursor) else null
         cursor.close()
         return product
     }
 
-    // Get distinct categories (for the filter bar)
     fun getCategories(): List<String> {
         val list = mutableListOf("All")
         val db = readableDatabase
-        val cursor = db.rawQuery(
-            "SELECT DISTINCT $COLUMN_CATEGORY FROM $TABLE_PRODUCTS", null
-        )
-        while (cursor.moveToNext()) {
-            list.add(cursor.getString(0))
-        }
+        val cursor = db.rawQuery("SELECT DISTINCT $COLUMN_CATEGORY FROM $TABLE_PRODUCTS", null)
+        while (cursor.moveToNext()) { list.add(cursor.getString(0)) }
         cursor.close()
         return list
     }
 
-    // Helper: convert cursor row to Product object
     private fun cursorToProduct(cursor: android.database.Cursor): Product {
         return Product(
-            id = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
-            name = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)),
+            id          = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)),
+            name        = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NAME)),
             description = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_DESCRIPTION)),
-            price = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_PRICE)),
-            category = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY)),
-            imageRes = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IMAGE_RES)),
-            rating = cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_RATING)),
-            isPopular = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IS_POPULAR)) == 1
+            price       = cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_PRICE)),
+            category    = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CATEGORY)),
+            imageRes    = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IMAGE_RES)),
+            rating      = cursor.getFloat(cursor.getColumnIndexOrThrow(COLUMN_RATING)),
+            isPopular   = cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_IS_POPULAR)) == 1
         )
     }
 }
-

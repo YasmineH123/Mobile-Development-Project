@@ -27,9 +27,23 @@
             android:exported="false"/>
 
         <activity android:name=".SignUpActivity"/>
+
         <activity
             android:name=".FoodItemDetailActivity"
             android:exported="false" />
+
+        <activity
+            android:name=".CartActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".PaymentActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".OrderConfirmationActivity"
+            android:exported="false" />
+
     </application>
 
 </manifest>

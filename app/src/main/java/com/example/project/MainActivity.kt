@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(intent)
             },
             onAddToCartClick = { product ->
+                CartManager.addItem(product)
                 Toast.makeText(
                     this,
                     getString(R.string.added_to_cart, product.name),
@@ -167,4 +168,5 @@ class MainActivity : AppCompatActivity() {
         }
 
         productsAdapter.refreshData(filtered)
-    }}
+    }
+}

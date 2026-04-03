@@ -1,7 +1,7 @@
 package com.example.project
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -37,7 +37,6 @@ class FoodItemDetailActivity : AppCompatActivity() {
         }
 
         // ── Build ingredient chips from description ───────────────────
-        // Ingredients are parsed from the comma-separated description
         val ingredients = product.description
             .split(",")
             .map { it.trim() }
@@ -65,9 +64,9 @@ class FoodItemDetailActivity : AppCompatActivity() {
             finish()
         }
 
-        // ── Cart button (nothing for now) ─────────────────────────────
+        // ── Cart icon → open CartActivity ────────────────────────────
         binding.btnCart.setOnClickListener {
-            // intentionally empty — cart activity not ready yet
+            startActivity(Intent(this, CartActivity::class.java))
         }
 
         // ── Quantity controls ────────────────────────────────────────
@@ -85,18 +84,14 @@ class FoodItemDetailActivity : AppCompatActivity() {
 
         // ── Add to Cart ──────────────────────────────────────────────
         binding.btnAddToCart.setOnClickListener {
+            repeat(quantity) { CartManager.addItem(product) }
+            quantity = 1
+            binding.tvQuantity.text = "1"
             Toast.makeText(
                 this,
                 getString(R.string.added_to_cart, product.name),
                 Toast.LENGTH_SHORT
             ).show()
-
-            // Uncomment when CartActivity is ready:
-            // val intent = Intent(this, CartActivity::class.java).apply {
-            //     putExtra("PRODUCT_ID", product.id)
-            //     putExtra("PRODUCT_QTY", quantity)
-            // }
-            // startActivity(intent)
         }
     }
 }

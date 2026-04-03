@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center"
-        android:paddingHorizontal="24dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
         android:paddingTop="64dp"
         android:paddingBottom="40dp">
 
@@ -57,7 +58,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingHorizontal="24dp"
+                android:paddingLeft="24dp"
+                android:paddingRight="24dp"
                 android:paddingTop="32dp"
                 android:paddingBottom="28dp">
 
@@ -79,28 +81,21 @@
                     android:textSize="13sp"
                     android:fontFamily="@font/poppins" />
 
-                <!-- Email field wrapper -->
+                <!-- Email field — no icon, plain input wrapper -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="52dp"
                     android:orientation="horizontal"
                     android:gravity="center_vertical"
                     android:background="@drawable/input_field_bg"
-                    android:paddingHorizontal="16dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
                     android:layout_marginBottom="14dp">
-
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:src="@drawable/ic_search"
-                        android:contentDescription="Email"
-                        app:tint="@color/gray_text" />
 
                     <EditText
                         android:id="@+id/etEmail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="10dp"
                         android:hint="Email address"
                         android:inputType="textEmailAddress"
                         android:background="@null"
@@ -110,10 +105,10 @@
                         android:fontFamily="@font/poppins" />
                 </LinearLayout>
 
-                <!-- Password field wrapper -->
+                <!-- Password field — wrap_content height so toggle renders correctly -->
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginBottom="28dp"
                     app:endIconMode="password_toggle"
                     app:endIconTint="@color/gray_text"
@@ -123,14 +118,15 @@
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/etPassword"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:hint="Password"
                         android:inputType="textPassword"
                         android:textColor="@color/navy"
                         android:textColorHint="@color/gray_text"
                         android:textSize="14sp"
                         android:fontFamily="@font/poppins"
-                        android:paddingStart="16dp" />
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp" />
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <Button
