@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -21,7 +22,7 @@ class ProductsAdapter(
         val productName: TextView   = itemView.findViewById(R.id.productName)
         val productRating: TextView = itemView.findViewById(R.id.productRating)
         val productPrice: TextView  = itemView.findViewById(R.id.productPrice)
-        val addToCartBtn: ImageView = itemView.findViewById(R.id.addToCartBtn)
+        val addToCartBtn: Button    = itemView.findViewById(R.id.addToCartBtn)
     }
 
     // ── onCreateViewHolder ───────────────────────────────────

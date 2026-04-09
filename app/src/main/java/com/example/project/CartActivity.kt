@@ -19,6 +19,8 @@ class CartActivity : AppCompatActivity() {
 
         binding.btnBack.setOnClickListener { finish() }
 
+        binding.btnStartOrdering.setOnClickListener { finish() }
+
         cartAdapter = CartAdapter(
             cartItems = CartManager.getItems().toMutableList(),
             context = this,

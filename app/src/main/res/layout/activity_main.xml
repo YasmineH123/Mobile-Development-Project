@@ -35,7 +35,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="What would you like?"
+                    android:text="@string/what_would_you_like"
                     android:textColor="@color/light_blue"
                     android:textSize="13sp"
                     android:fontFamily="@font/poppins" />
@@ -48,6 +48,15 @@
                     android:textColor="@color/white"
                     android:textSize="22sp"
                     android:fontFamily="@font/poppins_bold" />
+
+                <TextView
+                    android:id="@+id/tvWelcomeUser"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:textColor="@color/sky"
+                    android:textSize="12sp"
+                    android:fontFamily="@font/poppins" />
 
             </LinearLayout>
 
@@ -191,7 +200,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="No food found!"
+                    android:text="No meal matches your search!"
                     android:textColor="@color/navy"
                     android:textSize="18sp"
                     android:fontFamily="@font/poppins_semibold" />

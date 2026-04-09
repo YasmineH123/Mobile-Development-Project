@@ -25,13 +25,13 @@
             android:layout_alignParentStart="true"
             android:padding="8dp"
             android:background="@drawable/ripple_circle_light"
-            android:contentDescription="Back" />
+            android:contentDescription="@string/back" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="My Cart"
+            android:text="@string/my_cart"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:fontFamily="@font/poppins_semibold" />
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:text="0 items"
+            android:text="@string/_0_items"
             android:textColor="@color/light_blue"
             android:textSize="12sp"
             android:fontFamily="@font/poppins" />
@@ -106,6 +106,18 @@
                     android:textSize="13sp"
                     android:fontFamily="@font/poppins"
                     android:gravity="center" />
+
+                <Button
+                    android:id="@+id/btnStartOrdering"
+                    android:layout_width="200dp"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="24dp"
+                    android:text="Start Ordering"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:backgroundTint="@color/navy"
+                    app:cornerRadius="14dp" />
 
             </LinearLayout>
 

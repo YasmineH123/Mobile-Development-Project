@@ -30,22 +30,40 @@ class SignUpActivity : AppCompatActivity() {
         val loginText = findViewById<TextView>(R.id.tvLogin)
 
         signUpButton.setOnClickListener {
-            val email = emailField.text.toString()
+            val name     = nameField.text.toString().trim()
+            val email    = emailField.text.toString().trim()
             val password = passwordField.text.toString()
 
-            if (email.isEmpty() || password.isEmpty()) {
-                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
-            } else {
-                auth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            Toast.makeText(this, "Account Created!", Toast.LENGTH_SHORT).show()
-                            startActivity(Intent(this, LoginActivity::class.java))
-                            finish()
-                        } else {
-                            Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+            when {
+                name.isEmpty() ->
+                    Toast.makeText(this, "Please enter your name.", Toast.LENGTH_SHORT).show()
+                email.isEmpty() ->
+                    Toast.makeText(this, "Please enter your email.", Toast.LENGTH_SHORT).show()
+                password.isEmpty() ->
+                    Toast.makeText(this, "Please enter a password.", Toast.LENGTH_SHORT).show()
+                password.length < 6 ->
+                    Toast.makeText(this, "Password must be at least 6 characters.", Toast.LENGTH_SHORT).show()
+                else -> {
+                    signUpButton.isEnabled = false
+                    auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener { task ->
+                            signUpButton.isEnabled = true
+                            if (task.isSuccessful) {
+                                Toast.makeText(this, "Account created! Please sign in.", Toast.LENGTH_SHORT).show()
+                                startActivity(Intent(this, LoginActivity::class.java))
+                                finish()
+                            } else {
+                                val errorCode = (task.exception as? com.google.firebase.auth.FirebaseAuthException)?.errorCode
+                                val msg = when (errorCode) {
+                                    "ERROR_EMAIL_ALREADY_IN_USE" -> "An account with this email already exists."
+                                    "ERROR_INVALID_EMAIL"        -> "Please enter a valid email address."
+                                    "ERROR_WEAK_PASSWORD"        -> "Password is too weak. Use at least 6 characters."
+                                    else                         -> "Sign up failed. Please try again."
+                                }
+                                Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+                            }
                         }
-                    }
+                }
             }
         }
 

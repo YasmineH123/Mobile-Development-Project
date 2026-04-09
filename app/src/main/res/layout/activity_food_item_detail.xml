@@ -264,13 +264,13 @@
 
                                 <TextView
                                     android:id="@+id/tvQuantity"
-                                    android:layout_width="48dp"
-                                    android:layout_height="wrap_content"
-                                    android:text="1"
+                                    android:layout_width="36dp"
+                                    android:layout_height="22dp"
+                                    android:fontFamily="@font/poppins_bold"
                                     android:gravity="center"
+                                    android:text="1"
                                     android:textColor="@color/navy"
-                                    android:textSize="20sp"
-                                    android:fontFamily="@font/poppins_bold" />
+                                    android:textSize="20sp" />
 
                                 <TextView
                                     android:id="@+id/btnIncrease"
@@ -291,16 +291,16 @@
                         <Button
                             android:id="@+id/btnAddToCart"
                             android:layout_width="0dp"
-                            android:layout_height="56dp"
-                            android:layout_weight="1.3"
+                            android:layout_height="66dp"
                             android:layout_marginStart="20dp"
+                            android:layout_weight="1.3"
+                            android:backgroundTint="@color/navy"
+                            android:elevation="4dp"
+                            android:fontFamily="@font/poppins_semibold"
                             android:text="Add to Cart"
                             android:textColor="@color/white"
                             android:textSize="15sp"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:backgroundTint="@color/navy"
-                            app:cornerRadius="18dp"
-                            android:elevation="4dp" />
+                            app:cornerRadius="18dp" />
 
                     </LinearLayout>
 

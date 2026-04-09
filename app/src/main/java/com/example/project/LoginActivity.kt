@@ -23,6 +23,13 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
+        // If already logged in, skip straight to MainActivity
+        if (auth.currentUser != null) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+            return
+        }
+
         val emailField = findViewById<EditText>(R.id.etEmail)
         val passwordField = findViewById<TextInputEditText>(R.id.etPassword)
         val loginButton = findViewById<Button>(R.id.btnLogin)
@@ -35,14 +42,28 @@ class LoginActivity : AppCompatActivity() {
             if (email.isEmpty() || password.isEmpty()) {
                 Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show()
             } else {
+                loginButton.isEnabled = false
+                loginButton.text = getString(R.string.signing_in)
                 auth.signInWithEmailAndPassword(email, password)
                     .addOnCompleteListener { task ->
+                        loginButton.isEnabled = true
+                        loginButton.text = getString(R.string.sign_in)
                         if (task.isSuccessful) {
-                            Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Welcome back!", Toast.LENGTH_SHORT).show()
                             startActivity(Intent(this, MainActivity::class.java))
                             finish()
                         } else {
-                            Toast.makeText(this, "Error: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                            val errorCode = (task.exception as? com.google.firebase.auth.FirebaseAuthException)?.errorCode
+                            val friendlyMessage = when (errorCode) {
+                                "ERROR_WRONG_PASSWORD",
+                                "ERROR_INVALID_CREDENTIAL" -> "Incorrect password. Please try again."
+                                "ERROR_USER_NOT_FOUND"     -> "No account found with this email."
+                                "ERROR_INVALID_EMAIL"      -> "Please enter a valid email address."
+                                "ERROR_USER_DISABLED"      -> "This account has been disabled."
+                                "ERROR_TOO_MANY_REQUESTS"  -> "Too many attempts. Please try again later."
+                                else                       -> "Login failed. Please check your details."
+                            }
+                            Toast.makeText(this, friendlyMessage, Toast.LENGTH_SHORT).show()
                         }
                     }
             }

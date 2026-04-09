@@ -4,4 +4,13 @@
     <string name="product_price">$%1$.2f</string>
     <string name="added_to_cart">%1$s added to cart!</string>
     <string name="cart_item_count">%d items</string>
+    <string name="signing_in">Signing in...</string>
+    <string name="sign_in">Sign In</string>
+    <string name="back">Back</string>
+    <string name="my_cart">My Cart</string>
+    <string name="_0_items">0 items</string>
+    <string name="what_would_you_like">What would you like?</string>
+    <string name="back_home">back Home</string>
+    <string name="logout">Logout</string>
+    <string name="fly">FLY</string>
 </resources>

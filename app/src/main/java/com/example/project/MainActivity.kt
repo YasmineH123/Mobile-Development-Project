@@ -5,13 +5,17 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.Gravity
 import android.view.LayoutInflater
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.project.databinding.ActivityMainBinding
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
@@ -33,6 +37,37 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        // Logout button
+        val btnLogout = binding.toolbar.root.findViewById<Button>(R.id.btnLogout)
+        btnLogout?.setOnClickListener {
+            AlertDialog.Builder(this)
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to logout?")
+                .setPositiveButton("Logout") { _, _ ->
+                    FirebaseAuth.getInstance().signOut()
+                    startActivity(android.content.Intent(this, LoginActivity::class.java))
+                    finish()
+                }
+                .setNegativeButton("Cancel", null)
+                .show()
+        }
+
+        // Welcome message showing logged-in user's email
+        val currentUser = FirebaseAuth.getInstance().currentUser
+        val tvWelcome = binding.tvWelcomeUser
+        if (currentUser != null) {
+            tvWelcome.text = "Logged in as ${currentUser.email}"
+        }
+
+        // Cart icon → CartActivity
+        val btnCart = binding.toolbar.root.findViewById<ImageView>(R.id.btnCart)
+        btnCart?.setOnClickListener {
+            startActivity(android.content.Intent(this, CartActivity::class.java))
+        }
+        binding.toolbar.root.findViewById<android.view.View>(R.id.cartIconWrapper)?.setOnClickListener {
+            startActivity(android.content.Intent(this, CartActivity::class.java))
+        }
+
         dbHelper = FlyDatabaseHelper(this)
         allProducts = dbHelper.getAllProducts()
 
@@ -48,6 +83,7 @@ class MainActivity : AppCompatActivity() {
             },
             onAddToCartClick = { product ->
                 CartManager.addItem(product)
+                updateCartBadge()
                 Toast.makeText(
                     this,
                     getString(R.string.added_to_cart, product.name),
@@ -73,6 +109,24 @@ class MainActivity : AppCompatActivity() {
 
         // show all 12 on launch
         productsAdapter.refreshData(allProducts)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateCartBadge()
+    }
+
+    private fun updateCartBadge() {
+        val badge = binding.toolbar.root.findViewById<android.widget.TextView>(R.id.cartBadge)
+        val count = CartManager.getItemCount()
+        if (badge != null) {
+            if (count > 0) {
+                badge.visibility = android.view.View.VISIBLE
+                badge.text = if (count > 99) "99+" else count.toString()
+            } else {
+                badge.visibility = android.view.View.GONE
+            }
+        }
     }
 
     private fun buildCategoryChips() {
